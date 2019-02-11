@@ -23,6 +23,7 @@ import com.sun.jna.Callback;
 import com.sun.jna.DefaultTypeMapper;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.StringArray;
@@ -163,7 +164,10 @@ public class Louis {
 			// look for binaries inside this JAR first (by default this is done only as a last resort in JNA)
 			if (libraryPath == null) {
 				try {
-					libraryPath = Native.extractFromResourcePath("louis", Louis.class.getClassLoader()); }
+					libraryPath = Native.extractFromResourcePath(
+						Platform.isWindows() ? "liblouis" : "louis", // otherwise we have to rename the DLL files which
+						                                             // is not so easy to do in Maven
+						Louis.class.getClassLoader()); }
 				catch (IOException e) {}
 			}
 			try {
