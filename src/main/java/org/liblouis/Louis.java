@@ -223,7 +223,7 @@ public class Louis {
 								return aggregatorTables.get(table);
 							StringBuilder b = new StringBuilder();
 							for (String s : table.split(","))
-								b.append("include ").append(s).append('\n');
+								b.append("include ").append(s.replaceAll("\\\\", "\\\\\\\\")).append('\n');
 							InputStream in = new ByteArrayInputStream(b.toString().getBytes(StandardCharsets.UTF_8));
 							try {
 								File f = File.createTempFile("liblouis-java-", ".tbl");
